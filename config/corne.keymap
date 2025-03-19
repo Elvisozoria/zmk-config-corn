@@ -8,111 +8,87 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 
- / {
-    behaviors {
-        /* 
-         * 1. DTAP_TAB: Al pulsar una vez envía TAB, al pulsar dos veces rápidamente envía ESC.
-         */
-        dtap_tab: behavior-double-tap {
-            compatible = "zmk,behavior-double-tap";
-            timeout-ms = <200>;
-            single_tap_binding = <&kp TAB>;
-            double_tap_binding = <&kp ESC>;
+/ {
+        behaviors {
+                /* 
+                * 1. DTAP_TAB: Al pulsar una vez envía TAB, al pulsar dos veces rápidamente envía ESC.
+                */
+                dtap_tab: behavior-double-tap {
+                        compatible = "zmk,behavior-double-tap";
+                        timeout-ms = <200>;
+                        single_tap_binding = <&kp TAB>;
+                        double_tap_binding = <&kp ESC>;
+                };
+
+                /*
+                * 2. SCREENSHOT_MACRO: Al pulsar esta tecla se envía la combinación Command+Control+Shift+4
+                *    para captura de pantalla en macOS.
+                */
+                screenshot_macro: macro {
+                        compatible = "zmk,behavior-macro";
+                        label = "Screenshot";
+                        timeout-ms = <100>;
+                        tap-ms = <0>;
+                        bindings = <&kp LGUI &kp LCTRL &kp LSHIFT &kp N4>;
+                };
         };
 
-        /*
-         * 2. SCREENSHOT_MACRO: Al pulsar esta tecla se envía la combinación Command+Control+Shift+4
-         *    para captura de pantalla en macOS.
-         */
-        screenshot_macro: macro {
-            compatible = "zmk,behavior-macro";
-            label = "Screenshot";
-            timeout-ms = <100>;
-            tap-ms = <0>;
-            bindings = <&kp LGUI &kp LCTRL &kp LSHIFT &kp N4>;
+        keymap {
+                compatible = "zmk,keymap";
+
+                default_layer {
+                        // -----------------------------------------------------------------------------------------
+                        // |  dtap_tab |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BSPC |
+                        // | CTRL |  A  |  S  |  &screenshot_macro  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
+                        // | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | ESC  |
+                        //                    | GUI | LWR | SPC |   | ENT |  MO(arrow_layer)  | ALT |
+                        bindings = <
+                                &dtap_tab   &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
+                                &kp LCTRL &kp A &kp S &screenshot_macro &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
+                                &kp LSHFT &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp ESC
+                                                &kp LGUI &mo 1 &kp SPACE   &kp RET &mo arrow_layer &kp RALT
+                        >;
+                };
+                lower_layer {
+                        // -----------------------------------------------------------------------------------------
+                        // |  TAB |     |     |     |     |     |   |     |  7  |  8  |  9  |  0  | BSPC |
+                        // | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   | LFT |  4  |  5  |  6  |     |      |
+                        // | SHFT |     |     |     |     |     |   |     |  1  |  2  |  3  |  /  |   *  |
+                        //                    | GUI |     | SPC |   | ENT |  0  |  .  |
+                        bindings = <
+                                &kp TAB    &trans       &trans        &trans       &trans       &trans          &trans    &kp N7   &kp N8 &kp N9    &kp N0 &kp BSPC
+                                &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4   &kp LEFT &kp N4 &kp N5 &kp N6 &kp MINUS  &kp PLUS 
+                                &kp LSHFT  &trans       &trans       &trans       &trans       &trans         &trans &kp N1   &kp N2   &kp N3 &kp FSLH    &kp ASTRK
+                                                        &kp LGUI     &trans       &kp SPACE      &kp RET  &kp N0   &kp DOT
+                        >;
+                };
+
+                raise_layer {
+                        // -----------------------------------------------------------------------------------------
+                        // |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BSPC |
+                        // | CTRL |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
+                        // | SHFT |     |     |     |     |     |   |  _  |  +  |  {  |  }  | "|" |  ~   |
+                        //                    | GUI |     | SPC |   | ENT |     | ALT |
+                        bindings = <
+                                &kp  TAB  &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT   &kp CARET &kp AMPS  &kp ASTRK &kp LPAR &kp RPAR &kp BSPC
+                                &kp LCTRL &trans   &trans &trans   &trans   &trans      &kp MINUS &kp EQUAL &kp LBKT  &kp RBKT &kp BSLH &kp GRAVE
+                                &kp LSHFT &trans   &trans &trans   &trans   &trans      &kp UNDER &kp PLUS  &kp LBRC  &kp RBRC &kp PIPE &kp TILDE
+                                                        &kp LGUI &trans   &kp SPACE   &kp RET   &trans    &kp RALT
+                        >;
+                };
+                arrow_layer: arrow_layer {
+                        // -----------------------------------------------------------------------------------------
+                        // |    |     |     |     |     |     |   |     |     | up |     |     | BSPC |
+                        // |    |     |     |     |     |     |   |     | left|down|right|     |      |
+                        // |    |     |     |     |     |     |   |     |     |    |     |     |      |
+                        //                    | GUI |     | SPC |   | ENT |     | ALT |
+
+                        bindings = <
+                                &trans &trans &trans &trans &trans &trans &trans &trans &kp UP &trans &trans &trans
+                                &trans &trans &trans &trans &trans &trans &trans &kp LEFT &kp DOWN &kp RIGHT &trans &trans
+                                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                                &kp LGUI &trans   &kp SPACE   &kp RET   &trans    &kp RALT
+                        >;
+                };
         };
-    };
-
-    keymap {
-        compatible = "zmk,keymap";
-
-        default_layer {
-            // -----------------------------------------------------------------------------------------
-            // | DTAP_TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BSPC |
-            // | CTRL     |  A  |  S  | screenshot_macro (captura) | F  | G  |   | H  | J  | K  | L  | ;  | '   |
-            // | LSHFT    |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M  |  ,  |  .  |  /  | ESC  |
-            //                    | LGUI | MO(1) | SPACE | RET | MO(arrow_layer) | RALT |
-            bindings = <
-                /* Row 1 */
-                &dtap_tab   &kp Q    &kp W    &kp E    &kp R    &kp T    &kp Y    &kp U    &kp I    &kp O    &kp P    &kp BSPC
-
-                /* Row 2 */
-                &kp LCTRL   &kp A    &kp S    &screenshot_macro    &kp F    &kp G    &kp H    &kp J    &kp K    &kp L    &kp SEMI    &kp SQT
-
-                /* Row 3 */
-                &kp LSHFT   &kp Z    &kp X    &kp C    &kp V    &kp B    &kp N    &kp M    &kp COMMA    &kp DOT    &kp FSLH    &kp ESC
-
-                /* Row 4 */
-                &kp LGUI    &mo 1    &kp SPACE    &kp RET    &mo arrow_layer    &kp RALT
-            >;
-        };
-
-        lower_layer {
-            // -----------------------------------------------------------------------------------------
-            // Capa para funciones numéricas:
-            // Row 1: Números y BSPC (sin cambios)
-            bindings = <
-                /* Row 1 */
-                &kp TAB    &kp N1    &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7    &kp N8    &kp N9    &kp N0    &kp BSPC
-
-                /* Row 2:
-                   - Primeras 6 posiciones: botones BT
-                   - Luego, se reasignan (antes flechas) ahora a: N4, N5, N6
-                   - El resto queda transparente */
-                &bt BT_CLR   &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4   &kp N4   &kp N5   &kp N6   &trans   &trans   &trans
-
-                /* Row 3: Se asignan N3, N2 y N1 en las primeras 3 posiciones; el resto transparente */
-                &kp N3   &kp N2   &kp N1   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
-
-                /* Row 4: Sin cambios */
-                &kp LGUI   &trans   &kp SPACE   &kp RET   &trans   &kp RALT
-            >;
-        };
-
-        raise_layer {
-            // -----------------------------------------------------------------------------------------
-            // Capa raise (sin modificaciones respecto al original)
-            bindings = <
-                /* Row 1 */
-                &kp TAB   &kp EXCL   &kp AT   &kp HASH   &kp DLLR   &kp PRCNT   &kp CARET   &kp AMPS   &kp ASTRK   &kp LPAR   &kp RPAR   &kp BSPC
-
-                /* Row 2 */
-                &kp LCTRL   &trans   &trans   &trans   &trans   &trans   &kp MINUS   &kp EQUAL   &kp LBKT   &kp RBKT   &kp BSLH   &kp GRAVE
-
-                /* Row 3 */
-                &kp LSHFT   &trans   &trans   &trans   &trans   &trans   &kp UNDER   &kp PLUS   &kp LBRC   &kp RBRC   &kp PIPE   &kp TILDE
-
-                /* Row 4 */
-                &kp LGUI   &trans   &kp SPACE   &kp RET   &trans   &kp RALT
-            >;
-        };
-
-        arrow_layer: arrow_layer {
-            // -----------------------------------------------------------------------------------------
-            // Nueva capa para flechas de movimiento, activada al mantener presionada la tecla asignada (MO arrow_layer)
-            bindings = <
-                /* Row 1: 12 teclas transparentes */
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-
-                /* Row 2: 12 teclas; se asigna UP en la columna 9 */
-                &trans &trans &trans &trans &trans &trans &trans &trans &kp UP &trans &trans &trans
-
-                /* Row 3: 12 teclas; se asignan en columnas 7, 8 y 9: LEFT, DOWN y RIGHT */
-                &trans &trans &trans &trans &trans &trans &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans
-
-                /* Row 4: 6 teclas transparentes */
-                &trans &trans &trans &trans &trans &trans
-            >;
-        };
-    };
 };
