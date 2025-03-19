@@ -97,7 +97,7 @@
             >;
         };
 
-        arrow_layer {
+        arrow_layer: arrow_layer {
             // -----------------------------------------------------------------------------------------
             // Nueva capa para flechas de movimiento, activada al mantener presionada la tecla asignada (MO arrow_layer)
             bindings = <
