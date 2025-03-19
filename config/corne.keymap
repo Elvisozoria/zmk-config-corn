@@ -29,7 +29,7 @@
             label = "Screenshot";
             timeout-ms = <100>;
             tap-ms = <0>;
-            bindings = <&kp LGUI &kp LCTRL &kp LSHIFT &kp 4>;
+            bindings = <&kp LGUI &kp LCTRL &kp LSHIFT &kp N4>;
         };
     };
 
@@ -39,7 +39,7 @@
         default_layer {
             // -----------------------------------------------------------------------------------------
             // | DTAP_TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BSPC |
-            // | CTRL     |  A  |  S  | screenshot_macro (para captura) | F  | G  |   | H  | J  | K  | L  | ;  | '   |
+            // | CTRL     |  A  |  S  | screenshot_macro (captura) | F  | G  |   | H  | J  | K  | L  | ;  | '   |
             // | LSHFT    |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M  |  ,  |  .  |  /  | ESC  |
             //                    | LGUI | MO(1) | SPACE | RET | MO(arrow_layer) | RALT |
             bindings = <
@@ -59,30 +59,29 @@
 
         lower_layer {
             // -----------------------------------------------------------------------------------------
-            // Esta capa se usa para funciones numéricas:
+            // Capa para funciones numéricas:
             // Row 1: Números y BSPC (sin cambios)
             bindings = <
                 /* Row 1 */
                 &kp TAB    &kp N1    &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7    &kp N8    &kp N9    &kp N0    &kp BSPC
 
-                /* Row 2: Primeras 6 teclas: botones BT; luego, se reasignan los que antes eran flechas
-                   - Col 7 (antes LEFT) → 4
-                   - Col 8 (antes DOWN) → 5
-                   - Col 9 (antes UP) → 6
-                   - Las columnas 10-12 quedan transparentes */
-                &bt BT_CLR   &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4   &kp 4   &kp 5   &kp 6   &trans   &trans   &trans
+                /* Row 2:
+                   - Primeras 6 posiciones: botones BT
+                   - Luego, se reasignan (antes flechas) ahora a: N4, N5, N6
+                   - El resto queda transparente */
+                &bt BT_CLR   &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4   &kp N4   &kp N5   &kp N6   &trans   &trans   &trans
 
-                /* Row 3: Se asignan los números 3, 2 y 1 en las primeras 3 posiciones; el resto transparente */
-                &kp 3   &kp 2   &kp 1   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
+                /* Row 3: Se asignan N3, N2 y N1 en las primeras 3 posiciones; el resto transparente */
+                &kp N3   &kp N2   &kp N1   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
 
-                /* Row 4: Se deja igual */
+                /* Row 4: Sin cambios */
                 &kp LGUI   &trans   &kp SPACE   &kp RET   &trans   &kp RALT
             >;
         };
 
         raise_layer {
             // -----------------------------------------------------------------------------------------
-            // Capa raise (sin cambios respecto al keymap original)
+            // Capa raise (sin modificaciones respecto al original)
             bindings = <
                 /* Row 1 */
                 &kp TAB   &kp EXCL   &kp AT   &kp HASH   &kp DLLR   &kp PRCNT   &kp CARET   &kp AMPS   &kp ASTRK   &kp LPAR   &kp RPAR   &kp BSPC
@@ -100,22 +99,15 @@
 
         arrow_layer {
             // -----------------------------------------------------------------------------------------
-            // Nueva capa para flechas de movimiento, activada al mantener presionado la tecla de "raise" (ahora mo arrow_layer)
-            // En esta capa, la mayoría de teclas son transparentes, excepto:
-            // - En Row 2, columna 9 se asigna UP.
-            // - En Row 3, columnas 7, 8 y 9 se asignan LEFT, DOWN y RIGHT respectivamente.
+            // Nueva capa para flechas de movimiento, activada al mantener presionada la tecla asignada (MO arrow_layer)
             bindings = <
                 /* Row 1: 12 teclas transparentes */
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
 
-                /* Row 2: 12 teclas; se dejan las 8 primeras transparentes, se asigna UP en la columna 9, y el resto transparente */
+                /* Row 2: 12 teclas; se asigna UP en la columna 9 */
                 &trans &trans &trans &trans &trans &trans &trans &trans &kp UP &trans &trans &trans
 
-                /* Row 3: 12 teclas; las primeras 6 transparentes, luego:
-                   - Col 7: LEFT
-                   - Col 8: DOWN
-                   - Col 9: RIGHT
-                   El resto transparente */
+                /* Row 3: 12 teclas; se asignan en columnas 7, 8 y 9: LEFT, DOWN y RIGHT */
                 &trans &trans &trans &trans &trans &trans &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans
 
                 /* Row 4: 6 teclas transparentes */
