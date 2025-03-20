@@ -13,7 +13,6 @@
          /* 
                  * 1. DTAP_TAB: Al pulsar una vez envía TAB, al pulsar dos veces rápidamente envía ESC.
                  */
- 
          dtap_tab: dtap_tab {
              compatible = "zmk,behavior-tap-dance";
              #binding-cells = <0>;
@@ -45,12 +44,12 @@
  
          layer_s {
              bindings = <&lt 2 LC(S)>;
-             key-positions = <13 37>;
+             key-positions = <14 37>;
          };
  
          layer_d {
              bindings = <&lt 3 LC(D)>;
-             key-positions = <13 37>;
+             key-positions = <15 37>;
          };
      };
  
