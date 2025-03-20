@@ -33,26 +33,26 @@
                 };
         };
         combos {
-            combo_lower_a: combo {
+            combo_lower_a: combo_lower_a {
                 compatible = "zmk,behavior-combo";
                 timeout-ms = <30>;
                 key-positions = <20 8>;
                 bindings = <&mo 1>;
             };
 
-            combo_lower_s: combo {
+            combo_lower_s: combo_lower_s {
                 compatible = "zmk,behavior-combo";
                 timeout-ms = <30>;
                 key-positions = <20 9>;
                 bindings = <&mo 2>;
             };
-            combo_lower_d: combo {
+            combo_lower_d: combo_lower_d {
                 compatible = "zmk,behavior-combo";
                 timeout-ms = <30>;
                 key-positions = <20 10>;
                 bindings = <&mo 3>;
             };
-            combo_lower_f: combo {
+            combo_lower_f: combo_lower_f {
                 compatible = "zmk,behavior-combo";
                 timeout-ms = <30>;
                 key-positions = <20 11>;
