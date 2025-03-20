@@ -13,18 +13,18 @@
                 /* 
                 * 1. DTAP_TAB: Al pulsar una vez envía TAB, al pulsar dos veces rápidamente envía ESC.
                 */
-                dtap_tab: behavior-double-tap {
-                        compatible = "zmk,behavior-double-tap";
-                        timeout-ms = <200>;
-                        single_tap_binding = <&kp TAB>;
-                        double_tap_binding = <&kp ESC>;
+                dtap_tab: dtap_tab {
+                        compatible = "zmk,behavior-tap-dance";
+                        #binding-cells = <0>;
+                        tapping-term-ms = <200>;
+                        bindings = <&kp TAB>, <&kp ESC>, <&kp ESC>;
                 };
 
                 /*
                 * 2. SCREENSHOT_MACRO: Al pulsar esta tecla se envía la combinación Command+Control+Shift+4
                 *    para captura de pantalla en macOS.
                 */
-                screenshot_macro: macro {
+                screenshot_macro: screenshot_macro {
                         compatible = "zmk,behavior-macro";
                         #binding-cells = <0>;
                         label = "Screenshot";
