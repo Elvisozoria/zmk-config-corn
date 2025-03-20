@@ -37,26 +37,26 @@
                 compatible = "zmk,behavior-combo";
                 timeout-ms = <30>;
                 key-positions = <20 8>;
-                bindings = <&mo lower_layer>;
+                bindings = <&mo 1>;
             };
 
             combo_lower_s: combo {
                 compatible = "zmk,behavior-combo";
                 timeout-ms = <30>;
                 key-positions = <20 9>;
-                bindings = <&mo raise_layer>;
+                bindings = <&mo 2>;
             };
             combo_lower_d: combo {
                 compatible = "zmk,behavior-combo";
                 timeout-ms = <30>;
                 key-positions = <20 10>;
-                bindings = <&mo arrow_layer>;
+                bindings = <&mo 3>;
             };
             combo_lower_f: combo {
                 compatible = "zmk,behavior-combo";
                 timeout-ms = <30>;
                 key-positions = <20 11>;
-                bindings = <&mo arrow_layer>;
+                bindings = <&mo 3>;
             };
         };
 
