@@ -11,8 +11,9 @@
  / {
      behaviors {
          /* 
-                 * 1. DTAP_TAB: Al pulsar una vez envía TAB, al pulsar dos veces rápidamente envía ESC.
-                 */
+                  * 1. DTAP_TAB: Al pulsar una vez envía TAB, al pulsar dos veces rápidamente envía ESC.
+                  */
+ 
          dtap_tab: dtap_tab {
              compatible = "zmk,behavior-tap-dance";
              #binding-cells = <0>;
@@ -21,9 +22,9 @@
          };
  
          /*
-                 * 2. SCREENSHOT_MACRO: Al pulsar esta tecla se envía la combinación Command+Control+Shift+4
-                 *    para captura de pantalla en macOS.
-                 */
+                  * 2. SCREENSHOT_MACRO: Al pulsar esta tecla se envía la combinación Command+Control+Shift+4
+                  *    para captura de pantalla en macOS.
+                  */
  
          screenshot_macro: screenshot_macro {
              compatible = "zmk,behavior-macro";
@@ -40,16 +41,30 @@
          layer_a {
              bindings = <&lt 1 LC(A)>;
              key-positions = <13 37>;
+             timeout-ms = <500>;
+             layers = <0>;
          };
  
          layer_s {
              bindings = <&lt 2 LC(S)>;
              key-positions = <14 37>;
+             layers = <0>;
+             timeout-ms = <300>;
          };
  
          layer_d {
              bindings = <&lt 3 LC(D)>;
              key-positions = <15 37>;
+             layers = <0>;
+             timeout-ms = <200>;
+         };
+ 
+         screenshot {
+             bindings = <&screenshot_macro>;
+             key-positions = <37 16>;
+             slow-release;
+             layers = <0>;
+             timeout-ms = <500>;
          };
      };
  
