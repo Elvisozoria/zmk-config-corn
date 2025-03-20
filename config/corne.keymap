@@ -26,6 +26,7 @@
                 */
                 screenshot_macro: macro {
                         compatible = "zmk,behavior-macro";
+                        #binding-cells = <0>;
                         label = "Screenshot";
                         timeout-ms = <100>;
                         tap-ms = <0>;
