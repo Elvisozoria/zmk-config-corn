@@ -32,21 +32,48 @@
                         bindings = <&kp LGUI &kp LCTRL &kp LSHIFT &kp N4>;
                 };
         };
+        combos {
+            combo_lower_a: combo {
+                compatible = "zmk,behavior-combo";
+                timeout-ms = <30>;
+                key-positions = <20 8>;
+                bindings = <&mo lower_layer>;
+            };
+
+            combo_lower_s: combo {
+                compatible = "zmk,behavior-combo";
+                timeout-ms = <30>;
+                key-positions = <20 9>;
+                bindings = <&mo raise_layer>;
+            };
+            combo_lower_d: combo {
+                compatible = "zmk,behavior-combo";
+                timeout-ms = <30>;
+                key-positions = <20 10>;
+                bindings = <&mo arrow_layer>;
+            };
+            combo_lower_f: combo {
+                compatible = "zmk,behavior-combo";
+                timeout-ms = <30>;
+                key-positions = <20 11>;
+                bindings = <&mo arrow_layer>;
+            };
+        };
 
         keymap {
                 compatible = "zmk,keymap";
 
                 default_layer {
                         // -----------------------------------------------------------------------------------------
-                        // |  dtap_tab |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BSPC |
-                        // | CTRL |  A  |  S  |  &screenshot_macro  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
+                        // |esctab|  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BSPC |
+                        // | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
                         // | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | ESC  |
-                        //                    | GUI | LWR | SPC |   | ENT |  MO(arrow_layer)  | ALT |
+                        //                    | GUI |     | SPC |   | ENT | CTRL | ALT |
                         bindings = <
                                 &dtap_tab   &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
                                 &kp LCTRL &kp A &kp S &screenshot_macro &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
                                 &kp LSHFT &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp ESC
-                                                &kp LGUI &mo lower_layer &kp SPACE   &kp RET &mo arrow_layer &kp RALT
+                                                 &kp LGUI &trans &kp SPACE   &kp RET &kp RGUI  &kp RALT
                         >;
                 };
                 lower_layer {
