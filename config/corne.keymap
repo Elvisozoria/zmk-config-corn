@@ -34,7 +34,7 @@
              bindings = <&kp LGUI &kp LCTRL &kp LSHIFT &kp N4>;
          };
      };
- 
+
      combos {
          compatible = "zmk,combos";
  
@@ -60,8 +60,8 @@
          };
  
          screenshot {
-             bindings = <&screenshot_macro>;
-             key-positions = <37 16>;
+             bindings = <&kp LGUI &kp LCTRL &kp LSHIFT &kp N4>;
+             key-positions = <37 4>;
              slow-release;
              layers = <0>;
              timeout-ms = <500>;
@@ -83,7 +83,7 @@
  
              bindings = <
  &dtap_tab  &kp Q  &kp W  &kp E              &kp R   &kp T        &kp Y    &kp U     &kp I      &kp O    &kp P     &kp BSPC
- &kp LCTRL  &kp A  &kp S  &screenshot_macro  &kp F   &kp G        &kp H    &kp J     &kp K      &kp L    &kp SEMI  &kp SQT
+ &kp LCTRL  &kp A  &kp S  &kp D  &kp F   &kp G        &kp H    &kp J     &kp K      &kp L    &kp SEMI  &kp SQT
  &kp LSHFT  &kp Z  &kp X  &kp C              &kp V   &kp B        &kp N    &kp M     &kp COMMA  &kp DOT  &kp FSLH  &kp ESC
                           &kp LGUI           &trans  &kp SPACE    &kp RET  &kp RGUI  &kp RALT
              >;
