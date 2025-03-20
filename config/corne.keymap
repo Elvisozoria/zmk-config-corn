@@ -1,138 +1,131 @@
-/*
- * Copyright (c) 2020 The ZMK Contributors
- *
- * SPDX-License-Identifier: MIT
- */
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
+ 
+/ {
+    behaviors {
+        /* 
+        * 1. DTAP_TAB: Al pulsar una vez envía TAB, al pulsar dos veces rápidamente envía ESC.
+        */
 
- #include <behaviors.dtsi>
- #include <dt-bindings/zmk/bt.h>
- #include <dt-bindings/zmk/keys.h>
- 
- / {
-     behaviors {
-         /* 
-                  * 1. DTAP_TAB: Al pulsar una vez envía TAB, al pulsar dos veces rápidamente envía ESC.
-                  */
- 
-         dtap_tab: dtap_tab {
-             compatible = "zmk,behavior-tap-dance";
-             #binding-cells = <0>;
-             tapping-term-ms = <500>;
-             bindings = <&kp TAB>, <&kp ESC>, <&kp ESC>;
-         };
- 
-         /*
-                  * 2. SCREENSHOT_MACRO: Al pulsar esta tecla se envía la combinación Command+Control+Shift+4
-                  *    para captura de pantalla en macOS.
-                  */
- 
-         screenshot_macro: screenshot_macro {
-             compatible = "zmk,behavior-macro";
-             #binding-cells = <0>;
-             label = "Screenshot";
-             tap-ms = <0>;
-             bindings = <&kp LGUI &kp LCTRL &kp LSHIFT &kp N4>;
-         };
-     };
+        dtap_tab: dtap_tab {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <500>;
+            bindings = <&kp TAB>, <&kp ESC>, <&kp ESC>;
+        };
 
-     combos {
-         compatible = "zmk,combos";
- 
-         layer_a {
-             bindings = <&lt 1 LC(A)>;
-             key-positions = <13 37>;
-             timeout-ms = <500>;
-             layers = <0>;
-         };
- 
-         layer_s {
-             bindings = <&lt 2 LC(S)>;
-             key-positions = <14 37>;
-             layers = <0>;
-             timeout-ms = <300>;
-         };
- 
-         layer_d {
-             bindings = <&lt 3 LC(D)>;
-             key-positions = <15 37>;
-             layers = <0>;
-             timeout-ms = <200>;
-         };
- 
-         screenshot {
-             bindings = <&kp LGUI &kp LCTRL &kp LSHIFT &kp N4>;
-             key-positions = <37 4>;
-             slow-release;
-             layers = <0>;
-             timeout-ms = <500>;
-         };
-     };
- 
-     macros {
-     };
- 
-     keymap {
-         compatible = "zmk,keymap";
- 
-         default_layer {
-             // -----------------------------------------------------------------------------------------
-             // |esctab|  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BSPC |
-             // | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
-             // | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | ESC  |
-             //                    | GUI |     | SPC |   | ENT | CTRL | ALT |
- 
-             bindings = <
- &dtap_tab  &kp Q  &kp W  &kp E              &kp R   &kp T        &kp Y    &kp U     &kp I      &kp O    &kp P     &kp BSPC
- &kp LCTRL  &kp A  &kp S  &kp D  &kp F   &kp G        &kp H    &kp J     &kp K      &kp L    &kp SEMI  &kp SQT
- &kp LSHFT  &kp Z  &kp X  &kp C              &kp V   &kp B        &kp N    &kp M     &kp COMMA  &kp DOT  &kp FSLH  &kp ESC
-                          &kp LGUI           &trans  &kp SPACE    &kp RET  &kp RGUI  &kp RALT
-             >;
-         };
- 
-         lower_layer {
-             // -----------------------------------------------------------------------------------------
-             // |  TAB |     |     |     |     |     |   |     |  7  |  8  |  9  |  0  | BSPC |
-             // | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   | LFT |  4  |  5  |  6  |     |      |
-             // | SHFT |     |     |     |     |     |   |     |  1  |  2  |  3  |  /  |   *  |
-             //                    | GUI |     | SPC |   | ENT |  0  |  .  |
- 
-             bindings = <
- &kp TAB     &trans        &trans        &trans        &trans        &trans          &trans    &kp N7  &kp N8   &kp N9  &kp N0     &kp BSPC
- &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &kp LEFT  &kp N4  &kp N5   &kp N6  &kp MINUS  &kp PLUS
- &kp LSHFT   &trans        &trans        &trans        &trans        &trans          &trans    &kp N1  &kp N2   &kp N3  &kp FSLH   &kp ASTRK
-                                         &kp LGUI      &trans        &kp SPACE       &kp RET   &kp N0  &kp DOT
-             >;
-         };
- 
-         raise_layer {
-             // -----------------------------------------------------------------------------------------
-             // |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BSPC |
-             // | CTRL |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
-             // | SHFT |     |     |     |     |     |   |  _  |  +  |  {  |  }  | "|" |  ~   |
-             //                    | GUI |     | SPC |   | ENT |     | ALT |
- 
-             bindings = <
- &kp TAB    &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT    &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR  &kp RPAR  &kp BSPC
- &kp LCTRL  &trans    &trans  &trans    &trans    &trans       &kp MINUS  &kp EQUAL  &kp LBKT   &kp RBKT  &kp BSLH  &kp GRAVE
- &kp LSHFT  &trans    &trans  &trans    &trans    &trans       &kp UNDER  &kp PLUS   &kp LBRC   &kp RBRC  &kp PIPE  &kp TILDE
-                              &kp LGUI  &trans    &kp SPACE    &kp RET    &trans     &kp RALT
-             >;
-         };
- 
-         arrow_layer: arrow_layer {
-             // -----------------------------------------------------------------------------------------
-             // |    |     |     |     |     |     |   |     |     | up |     |     | BSPC |
-             // |    |     |     |     |     |     |   |     | left|down|right|     |      |
-             // |    |     |     |     |     |     |   |     |     |    |     |     |      |
-             //                    | GUI |     | SPC |   | ENT |     | ALT |
- 
-             bindings = <
- &trans  &trans  &trans  &trans    &trans  &trans       &trans   &trans    &kp UP    &trans     &trans  &trans
- &trans  &trans  &trans  &trans    &trans  &trans       &trans   &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
- &trans  &trans  &trans  &trans    &trans  &trans       &trans   &trans    &trans    &trans     &trans  &trans
-                         &kp LGUI  &trans  &kp SPACE    &kp RET  &trans    &kp RALT
-             >;
-         };
-     };
- };
- 
+        /*
+        * 2. SCREENSHOT_MACRO: Al pulsar esta tecla se envía la combinación Command+Control+Shift+4
+        *    para captura de pantalla en macOS.
+        */
+
+        screenshot_macro: screenshot_macro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "Screenshot";
+            tap-ms = <0>;
+            bindings = <&kp LGUI &kp LCTRL &kp LSHIFT &kp N4>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+
+        layer_a {
+            bindings = <&lt 1 LC(A)>;
+            key-positions = <13 37>;
+            timeout-ms = <500>;
+            layers = <0>;
+        };
+
+        layer_s {
+            bindings = <&lt 2 LC(S)>;
+            key-positions = <14 37>;
+            layers = <0>;
+            timeout-ms = <300>;
+        };
+
+        layer_d {
+            bindings = <&lt 3 LC(D)>;
+            key-positions = <15 37>;
+            layers = <0>;
+            timeout-ms = <200>;
+        };
+
+        screenshot {
+            bindings = <&kp LGUI &kp LCTRL &kp LSHIFT &kp N4>;
+            key-positions = <37 4>;
+            slow-release;
+            layers = <0>;
+            timeout-ms = <500>;
+        };
+    };
+
+    macros {
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            // -----------------------------------------------------------------------------------------
+            // |esctab|  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BSPC |
+            // | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
+            // | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | ESC  |
+            //                    | GUI |     | SPC |   | ENT | CTRL | ALT |
+
+            bindings = <
+                &dtap_tab  &kp Q  &kp W  &kp E              &kp R   &kp T        &kp Y    &kp U     &kp I      &kp O    &kp P     &kp BSPC
+                &kp LCTRL  &kp A  &kp S  &kp D  &kp F   &kp G        &kp H    &kp J     &kp K      &kp L    &kp SEMI  &kp SQT
+                &kp LSHFT  &kp Z  &kp X  &kp C              &kp V   &kp B        &kp N    &kp M     &kp COMMA  &kp DOT  &kp FSLH  &kp ESC
+                                        &kp LGUI           &trans  &kp SPACE    &kp RET  &kp RGUI  &kp RALT
+            >;
+        };
+
+        lower_layer {
+            // -----------------------------------------------------------------------------------------
+            // |  TAB |     |     |     |     |     |   |     |  7  |  8  |  9  |  0  | BSPC |
+            // | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   | LFT |  4  |  5  |  6  |     |      |
+            // | SHFT |     |     |     |     |     |   |     |  1  |  2  |  3  |  /  |   *  |
+            //                    | GUI |     | SPC |   | ENT |  0  |  .  |
+
+            bindings = <
+                &kp TAB     &trans        &trans        &trans        &trans        &trans          &trans    &kp N7  &kp N8   &kp N9  &kp N0     &kp BSPC
+                &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &kp LEFT  &kp N4  &kp N5   &kp N6  &kp MINUS  &kp PLUS
+                &kp LSHFT   &trans        &trans        &trans        &trans        &trans          &trans    &kp N1  &kp N2   &kp N3  &kp FSLH   &kp ASTRK
+                                                        &kp LGUI      &trans        &kp SPACE       &kp RET   &kp N0  &kp DOT
+            >;
+        };
+
+        raise_layer {
+            // -----------------------------------------------------------------------------------------
+            // |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BSPC |
+            // | CTRL |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
+            // | SHFT |     |     |     |     |     |   |  _  |  +  |  {  |  }  | "|" |  ~   |
+            //                    | GUI |     | SPC |   | ENT |     | ALT |
+
+            bindings = <
+                &kp TAB    &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT    &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR  &kp RPAR  &kp BSPC
+                &kp LCTRL  &trans    &trans  &trans    &trans    &trans       &kp MINUS  &kp EQUAL  &kp LBKT   &kp RBKT  &kp BSLH  &kp GRAVE
+                &kp LSHFT  &trans    &trans  &trans    &trans    &trans       &kp UNDER  &kp PLUS   &kp LBRC   &kp RBRC  &kp PIPE  &kp TILDE
+                                            &kp LGUI  &trans    &kp SPACE    &kp RET    &trans     &kp RALT
+                            >;
+        };
+
+        arrow_layer: arrow_layer {
+            // -----------------------------------------------------------------------------------------
+            // |    |     |     |     |     |     |   |     |     | up |     |     | BSPC |
+            // |    |     |     |     |     |     |   |     | left|down|right|     |      |
+            // |    |     |     |     |     |     |   |     |     |    |     |     |      |
+            //                    | GUI |     | SPC |   | ENT |     | ALT |
+
+            bindings = <
+                &trans  &trans  &trans  &trans    &trans  &trans       &trans   &trans    &kp UP    &trans     &trans  &trans
+                &trans  &trans  &trans  &trans    &trans  &trans       &trans   &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
+                &trans  &trans  &trans  &trans    &trans  &trans       &trans   &trans    &trans    &trans     &trans  &trans
+                                        &kp LGUI  &trans  &kp SPACE    &kp RET  &trans    &kp RALT
+            >;
+        };
+    };
+};
